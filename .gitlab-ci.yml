@@ -1,0 +1,27 @@
+image: maven:3-openjdk-17-slim
+
+
+stages:
+  - build
+  - test
+  - package
+
+cache:
+  paths:
+    - .m2
+
+maven-compile:
+  stage: build
+  script: "mvn -Dmaven.repo.local=.m2 clean compile"
+
+maven-test:
+  stage: test
+  script: "mvn -Dmaven.repo.local=.m2 clean test"
+
+
+maven-package:
+  stage: package
+  script: "mvn -Dmaven.repo.local=.m2 clean package"
+  artifacts:
+    paths:
+      - target/*.jar
